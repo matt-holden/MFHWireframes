@@ -1,0 +1,21 @@
+PODS:
+  - Kiwi/ARC (2.2.4)
+  - Kiwi/NonARC (2.2.4)
+  - Kiwi/XCTest (2.2.4):
+    - Kiwi/ARC
+    - Kiwi/NonARC
+  - MFHWireframes (0.1.0)
+
+DEPENDENCIES:
+  - Kiwi/XCTest
+  - MFHWireframes (from `../`)
+
+EXTERNAL SOURCES:
+  MFHWireframes:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Kiwi: d60d7498b640a16f58b01925fc3c8d7c4d809f66
+  MFHWireframes: c7bc0782d2e48d9698ae084c7da376e90b95de70
+
+COCOAPODS: 0.32.1
