@@ -33,14 +33,11 @@
 @interface MFHWireframe : NSObject
 
 - (__weak MFHWireframe*)parentWireframe;
-- (__weak UIViewController*)rootViewController;
 
-- (id)initWithRootViewController:(__weak UIViewController*)viewController;
+/** Create a wireframe that keeps a weak reference to the wireframe it was forked from */
+- (id)initWireframeBranchedFromWireframe:(MFHWireframe*)parentWireframe;
 
-- (id)initWithRootViewController:(__weak UIViewController*)viewController
-           branchedFromWireframe:(MFHWireframe*)parentWireframe;
-
-/** The view controller will obtain a strong reference to the receiver,
+/** The view controller will keep a strong reference to the receiver,
  but the receiver will have a weak reference to the viewController */
 - (void)attachToViewController:(UIViewController*)viewController;
 

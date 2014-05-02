@@ -22,15 +22,14 @@
     LandingScreenViewController *landingVC = [[LandingScreenViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:landingVC];
 
-    IntroSequenceWireframe *wf = [[IntroSequenceWireframe alloc] initWithRootViewController:landingVC];
+    IntroSequenceWireframe *wf = [[IntroSequenceWireframe alloc] init];
+    [wf attachToViewController:landingVC];
 
     // Test the "New User" workflow
     [wf setFirstTimeUser:YES];
 
     // Uncomment to test the "'not a new user' workflow"
     //    [wf setFirstTimeUser:NO];
-
-    [wf attachToViewController:landingVC];
 
     [window setRootViewController:navVC];
     [window makeKeyAndVisible];

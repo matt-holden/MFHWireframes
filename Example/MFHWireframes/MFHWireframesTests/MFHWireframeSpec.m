@@ -18,7 +18,8 @@ describe(@"MFHWireframe", ^{
 
     beforeEach(^{
         vc = [UIViewController new];
-        wf = [[MFHWireframe alloc] initWithRootViewController:vc];
+        wf = [MFHWireframe new];
+        [wf attachToViewController:vc];
     });
 
     context(@"the viewcontroller", ^{
@@ -52,8 +53,8 @@ describe(@"MFHWireframe", ^{
 
         beforeEach(^{
             vc2 = [UIViewController new];
-            branchedWireframe = [[MFHWireframe alloc] initWithRootViewController:vc2
-                                                           branchedFromWireframe:wf];
+            branchedWireframe = [[MFHWireframe alloc] initWireframeBranchedFromWireframe:wf];
+            [branchedWireframe attachToViewController:vc2];
         });
 
         it(@"should have a reference to the parent wireframe", ^{
@@ -86,7 +87,8 @@ describe(@"MFHWireframe", ^{
             MFHWireframe *wireframe;
             for (int i = 0; i < 5; i++) {
                 UIViewController *vc = [UIViewController new];
-                wireframe = [[MFHWireframe alloc] initWithRootViewController:vc branchedFromWireframe:[wireframes lastObject]];
+                wireframe = [[MFHWireframe alloc] initWireframeBranchedFromWireframe:[wireframes lastObject]];
+                [wireframe attachToViewController:vc];
 
                 if (i == 0) {
                     wireframe[@"hello"] = @"world";

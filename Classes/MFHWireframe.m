@@ -29,7 +29,6 @@ static char kMFHWireframeViewControllerAssociationKey;
 
 @interface MFHWireframe() {
     __weak MFHWireframe     *parentWireframe_;
-    __weak UIViewController *rootViewController_;
     NSMutableDictionary     *dictionary_;
 }
 @end
@@ -48,28 +47,18 @@ static dispatch_queue_t wireframe_dictionary_access_queue_;
     return parentWireframe_;
 }
 
-- (__weak UIViewController*)rootViewController
-{
-    return rootViewController_;
-}
-
-
-- (id)initWithRootViewController:(__weak UIViewController*)viewController
+- (id)init
 {
     self = [super init];
-
     self->dictionary_ = [NSMutableDictionary new];
-    self->rootViewController_ = viewController;
-    [viewController attachWireframe:self];
     return self;
 }
 
-- (id)initWithRootViewController:(__weak UIViewController*)viewController
-                          branchedFromWireframe:(MFHWireframe*)parentWireframe
+- (id)initWireframeBranchedFromWireframe:(MFHWireframe*)parentWireframe
 {
     NSParameterAssert(parentWireframe);
 
-    self = [self initWithRootViewController:viewController];
+    self = [self init];
     self->parentWireframe_ = parentWireframe;
     return self;
 }
