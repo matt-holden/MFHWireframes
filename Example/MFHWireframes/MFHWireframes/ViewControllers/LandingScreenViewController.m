@@ -7,7 +7,7 @@
 //
 
 #import "LandingScreenViewController.h"
-#import "MFHWireframe.h"
+#import <MFHWireframes/MFHWireframe.h>
 #import "IntroSequenceWireframe.h"
 
 @interface LandingScreenViewController ()

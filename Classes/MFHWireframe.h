@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <objc/runtime.h>
-#import "MFHWireframe.h"
 
 
 // Let our users choose something less-intrusive if 'wireframe'

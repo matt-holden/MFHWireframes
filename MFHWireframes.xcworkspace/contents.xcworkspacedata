@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <Group
-      location = "container:Classes"
+      location = "group:Classes"
       name = "Classes">
       <FileRef
          location = "group:MFHWireframe.h">

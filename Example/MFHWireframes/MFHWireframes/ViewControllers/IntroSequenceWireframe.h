@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Matt Holden. All rights reserved.
 //
 
-#import "MFHWireframe.h"
+#import <MFHWireframes/MFHWireframe.h>
 
 @interface IntroSequenceWireframe : MFHWireframe
 

@@ -9,6 +9,6 @@
 // MFHWireframes
 #define COCOAPODS_POD_AVAILABLE_MFHWireframes
 #define COCOAPODS_VERSION_MAJOR_MFHWireframes 0
-#define COCOAPODS_VERSION_MINOR_MFHWireframes 1
-#define COCOAPODS_VERSION_PATCH_MFHWireframes 0
+#define COCOAPODS_VERSION_MINOR_MFHWireframes 0
+#define COCOAPODS_VERSION_PATCH_MFHWireframes 9
 

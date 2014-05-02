@@ -6,7 +6,7 @@
 //
 //
 
-#import "MFHWireframe.h"
+#import <MFHWireframes/MFHWireframe.h>
 #import <objc/runtime.h>
 
 // 

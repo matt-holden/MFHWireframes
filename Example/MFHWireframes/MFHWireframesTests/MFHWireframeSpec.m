@@ -7,7 +7,7 @@
 //
 
 #import <Kiwi/Kiwi.h>
-#import "MFHWireframe.h"
+#import <MFHWireframes/MFHWireframe.h>
 
 
 SPEC_BEGIN(MFHWireframeSpec)

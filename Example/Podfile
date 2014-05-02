@@ -1,6 +1,7 @@
-pod "MFHWireframes", :path => "../"
-workspace "../MFHWireframes"
-xcodeproj "MFHWireframes/MFHWireframes"
+workspace "../MFHWireframes.xcworkspace"
+xcodeproj "MFHWireframes/MFHWireframes.xcodeproj"
+
+pod "MFHWireframes", :path => "../MFHWireframes.podspec"
 
 target "MFHWireframesTests", :exclusive => true do
       pod 'Kiwi/XCTest'
