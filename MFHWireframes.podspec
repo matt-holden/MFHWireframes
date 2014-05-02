@@ -19,6 +19,6 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '7.0'
   s.requires_arc = true
 
-  s.source_files = 'Classes/MFHWireframe.m'
+  s.source_files = 'Classes/MFHWireframe.*'
   s.public_header_files = 'Classes/MFHWireframe.h'
 end

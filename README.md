@@ -39,7 +39,7 @@ application requirements are introduced.
   // Attach it to the current view controller. 
   // The view controller retains the wireframe, when the view controller is deallocated
   // the wireframe will be released, too.
-  [wireframe attachToViewController:nextVc];
+  [wireframe attachToViewController:self];
 }
 
 // Some arbitrary event handler...
