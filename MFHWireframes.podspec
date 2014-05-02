@@ -6,23 +6,14 @@
 #
 Pod::Spec.new do |s|
   s.name             = "MFHWireframes"
-  s.version          = "0.1.0"
-  s.summary          = "MFHWireframes is exciting!"
+  s.version          = "0.0.9"
+  s.summary          = "Decisioningmaking and contextual data for your UIViewControllers"
 
-=begin
-  s.description      = <<-DESC
-                       An optional longer description of MFHWireframes
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
-                       DESC
-=end
-
-  s.homepage         = "github.com/matt-holden/MFHWireframes"
-  s.screenshots      = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "http://www.github.com/matt-holden/MFHWireframes"
+  #s.screenshots      = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Matthew Holden" => "jftholden@yahoo.com" }
-  s.source           = { :git => "http://EXAMPLE/NAME.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/matt-holden/MFHWireframes.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/MFHolden'
 
   # s.platform     = :ios, '5.0'
@@ -33,8 +24,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/*.m'
   #s.resources = 'Assets/*.png'
 
-  s.ios.exclude_files = 'Classes/osx'
-  s.osx.exclude_files = 'Classes/ios'
   s.public_header_files = 'Classes/MFHWireframe.h'
   # s.frameworks = 'SomeFramework', 'AnotherFramework'
   # s.dependency 'JSONKit', '~> 1.4'
