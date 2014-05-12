@@ -6,8 +6,8 @@
 #
 Pod::Spec.new do |s|
   s.name             = "MFHWireframes"
-  s.version          = "0.0.10"
-  s.summary          = "Decisioningmaking and contextual data for your UIViewControllers"
+  s.version          = "0.1.0"
+  s.summary          = "Decisionmaking and contextual data for your UIViewControllers"
 
   s.homepage         = "http://www.github.com/matt-holden/MFHWireframes"
   s.license          = 'MIT'

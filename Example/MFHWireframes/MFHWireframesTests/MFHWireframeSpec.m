@@ -29,7 +29,7 @@ describe(@"MFHWireframe", ^{
         });
     });
 
-    context(@"can set and retrieve arbitrary values", ^{
+    context(@"can set, and retrieve remove arbitrary values", ^{
 
         specify(^{
             [wf setObject:@"bar" forKey:@"foo"];
@@ -44,6 +44,13 @@ describe(@"MFHWireframe", ^{
         it(@"should be writeable via object subscripting", ^{
             wf[@"foo"] = @"bar";
             [[wf[@"foo"] should] equal:@"bar"];
+        });
+
+        it(@"should remove an object when asked to", ^{
+            wf[@"key"] = @"value";
+            [[wf[@"key"] should] equal:@"value"];
+            [wf removeObjectForKey:@"key"];
+            [[wf[@"key"] should] beNil];
         });
     });
 

@@ -114,4 +114,11 @@ static dispatch_queue_t wireframe_dictionary_access_queue_;
     });
 }
 
+- (void)removeObjectForKey:(id<NSCopying>)key
+{
+    dispatch_barrier_async(wireframe_dictionary_access_queue_, ^{
+        [self->dictionary_ removeObjectForKey:key];
+    });
+}
+
 @end
