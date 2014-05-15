@@ -35,6 +35,15 @@
 - (MFHWireframe*)wireframeInHierarchyOfClass:(Class)wireframeClass includeSelf:(BOOL)includeSelf;
 
 /**
+ Returns the first wireframe in the receiver's wireframe hierarchy matching or inheriting from 'wireframeClass'
+
+ @param includeSelf - If YES, the receiver will be tested for first before looking at parent nodes
+ @notes the search starts with the receiver and recursively searches UP the tree
+ @important This algorithm uses `isMemberOfClass` for its test, not `isKindOfClass`
+ */
+- (MFHWireframe*)wireframeInHierarchyOfClassOrSubclass:(Class)wireframeClass includeSelf:(BOOL)includeSelf;
+
+/**
  Returns the first wireframe in the receiver's wireframe hierarchy conforming to 'wireframeProtocol'
 
  @param includeSelf - If YES, the receiver will be tested for first before looking at parent nodes

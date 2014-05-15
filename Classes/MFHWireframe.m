@@ -69,6 +69,19 @@ MFHWireframe * wireframePassingTest(MFHWireframe *startingNode, BOOL(^predicate)
     return wf;
 }
 
+- (MFHWireframe*)wireframeInHierarchyOfClassOrSubclass:(Class)wireframeClass includeSelf:(BOOL)includeSelf
+{
+    MFHWireframe *node = [self MFH_WIREFRAME_ACCESSOR_SELECTOR];
+    if (!includeSelf)
+        node = [node parentWireframe];
+
+    MFHWireframe *wf = wireframePassingTest(node, ^BOOL(MFHWireframe* wf){
+        return [wf isKindOfClass:wireframeClass];
+    });
+
+    return wf;
+}
+
 - (MFHWireframe*)wireframeInHierarchyConformingToProtocol:(Protocol*)wireframeProtocol includeSelf:(BOOL)includeSelf
 {
     MFHWireframe *node = [self MFH_WIREFRAME_ACCESSOR_SELECTOR];

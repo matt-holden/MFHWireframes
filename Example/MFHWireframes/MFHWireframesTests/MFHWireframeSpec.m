@@ -23,7 +23,7 @@
 @end
 
 /** dummy subclass for specs */
-@interface MFHWireframeSubclass2 : MFHWireframe <MFHSomeProtocol2>
+@interface MFHWireframeSubclass2 : MFHWireframeSubclass1 <MFHSomeProtocol2>
 @end
 @implementation MFHWireframeSubclass2
 @end
@@ -122,6 +122,23 @@ describe(@"MFHWireframe", ^{
                 [[[someVC wireframeInHierarchyOfClass:[MFHWireframeSubclass2 class] includeSelf:YES] should] equal:someVC.wireframe];
             });
 
+            it(@"should provide access to itself or a parent wireframes matching a class or subclass in the WF hierarchy", ^{
+                // Should stop at first node, since we use 'isKindOfClass'
+                [[[someVC wireframeInHierarchyOfClassOrSubclass:[MFHWireframe class] includeSelf:YES] should] equal:someVC.wireframe];
+
+                // With `includeSelf`=NO, this should have to look one level up
+                [[[someVC wireframeInHierarchyOfClassOrSubclass:[MFHWireframe class] includeSelf:NO] should] equal:[someVC.wireframe parentWireframe]];
+
+                // Subclass2 wireframe inherits from Subclass1, so the first item should match without looking higher
+                [[[someVC wireframeInHierarchyOfClassOrSubclass:[MFHWireframeSubclass1 class] includeSelf:YES] should] equal:subclass2Wireframe];
+
+                // Should return its own wireframe
+                [[[someVC wireframeInHierarchyOfClassOrSubclass:[MFHWireframeSubclass2 class] includeSelf:YES] should] equal:subclass2Wireframe];
+
+                // With includeSelf=NO, this should look *up* one level and match MFHWireframeSubclass1
+                [[[someVC wireframeInHierarchyOfClassOrSubclass:[MFHWireframeSubclass1 class] includeSelf:NO] should] equal:[someVC.wireframe parentWireframe]];
+            });
+
             context(@"should provide access to itself or a parent wireframes matching a protocol in the WF hierarchy", ^{
                 // Should look all the way to the top, since we use 'memberOfClass'
                 it(@"should return nil if no match is found", ^{
@@ -129,10 +146,14 @@ describe(@"MFHWireframe", ^{
                 });
 
                 it(@"should return the appropriate wireframe if a match is found", ^{
-                    //MFHWireframeSubclass1 conforms to MFHSomeProtocol1 (see top of spec file)
-                    [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(MFHSomeProtocol1) includeSelf:YES] should] equal:subclass1Wireframe];
+                    //MFHWireframeSubclass2 inherits from MFHWireframeSubclass2, which conforms to MFHSomeProtocol1 (see top of spec file)
+                    [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(MFHSomeProtocol1) includeSelf:YES] should] equal:subclass2Wireframe /* aka someVC.wireframe */];
 
                     [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(MFHSomeProtocol2) includeSelf:YES] should] equal:subclass2Wireframe];
+
+                    [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(MFHSomeProtocol2) includeSelf:NO] should] beNil];
+
+                    [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(MFHSomeProtocol1) includeSelf:NO] should] equal:subclass1Wireframe];
                 });
             });
 
