@@ -23,6 +23,65 @@ static char kMFHWireframeViewControllerAssociationKey;
 {
     return objc_getAssociatedObject(self, &kMFHWireframeViewControllerAssociationKey);
 }
+
+-(MFHWireframe*)wireframeOrParentWireframeOfClass:(Class)wireframeClass
+{
+    MFHWireframe *node = [self MFH_WIREFRAME_ACCESSOR_SELECTOR];
+    while (node) {
+        if ([node isKindOfClass:wireframeClass])
+            return node;
+
+        // TODO implement check for infinite loop (use algorithm for
+        // finding loops in a linked list).
+        // If a loop is found, AND the main iterator has
+        // cycled through one full time, return nil with a warning
+        node = [node parentWireframe];
+    }
+
+    return nil;
+}
+
+MFHWireframe * wireframePassingTest(MFHWireframe *startingNode, BOOL(^predicate)(MFHWireframe *wireframe)) {
+    MFHWireframe *node = startingNode;
+    while (node) {
+        if (predicate(node))
+            return node;
+
+        // TODO implement check for infinite loop (use algorithm for
+        // finding loops in a linked list).
+        // If a loop is found, AND the main iterator has
+        // cycled through one full time, return nil with a warning
+        node = [node parentWireframe];
+    }
+    return node;
+}
+
+- (MFHWireframe*)wireframeInHierarchyOfClass:(Class)wireframeClass includeSelf:(BOOL)includeSelf
+{
+    MFHWireframe *node = [self MFH_WIREFRAME_ACCESSOR_SELECTOR];
+    if (!includeSelf)
+        node = [node parentWireframe];
+
+    MFHWireframe *wf = wireframePassingTest(node, ^BOOL(MFHWireframe* wf){
+        return [wf isMemberOfClass:wireframeClass];
+    });
+
+    return wf;
+}
+
+- (MFHWireframe*)wireframeInHierarchyConformingToProtocol:(Protocol*)wireframeProtocol includeSelf:(BOOL)includeSelf
+{
+    MFHWireframe *node = [self MFH_WIREFRAME_ACCESSOR_SELECTOR];
+    if (!includeSelf)
+        node = [node parentWireframe];
+
+    MFHWireframe *wf = wireframePassingTest(node, ^BOOL(MFHWireframe* wf){
+        return [wf conformsToProtocol:wireframeProtocol];
+    });
+
+    return wf;
+}
+
 @end
 
 

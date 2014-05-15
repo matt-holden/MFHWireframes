@@ -24,6 +24,23 @@
  and exposing that MFHWireframe via the added MFH_WIREFRAME_ACCESSOR_SELECTOR property
  */
 - (MFHWireframe*)MFH_WIREFRAME_ACCESSOR_SELECTOR;
+
+/**
+ Returns the first wireframe in the receiver's wireframe hierarchy matching 'wireframeClass'
+
+ @param includeSelf - If YES, the receiver will be tested for first before looking at parent nodes
+ @notes the search starts with the receiver and recursively searches UP the tree
+ @important This algorithm uses `isMemberOfClass` for its test, not `isKindOfClass`
+ */
+- (MFHWireframe*)wireframeInHierarchyOfClass:(Class)wireframeClass includeSelf:(BOOL)includeSelf;
+
+/**
+ Returns the first wireframe in the receiver's wireframe hierarchy conforming to 'wireframeProtocol'
+
+ @param includeSelf - If YES, the receiver will be tested for first before looking at parent nodes
+ @notes the search starts with the receiver and recursively searches UP the tree
+ */
+- (MFHWireframe*)wireframeInHierarchyConformingToProtocol:(Protocol*)wireframeProtocol includeSelf:(BOOL)includeSelf;
 @end
 
 
@@ -33,7 +50,7 @@
 - (__weak MFHWireframe*)parentWireframe;
 
 /** Create a wireframe that keeps a weak reference to the wireframe it was forked from */
-- (id)initWireframeBranchedFromWireframe:(MFHWireframe*)parentWireframe;
+- (id)initWireframeBranchedFromWireframe:(__weak MFHWireframe*)parentWireframe;
 
 /** The view controller will keep a strong reference to the receiver,
  but the receiver will have a weak reference to the viewController */

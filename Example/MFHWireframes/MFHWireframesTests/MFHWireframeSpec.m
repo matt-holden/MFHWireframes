@@ -9,6 +9,25 @@
 #import <Kiwi/Kiwi.h>
 #import <MFHWireframes/MFHWireframe.h>
 
+/** dummy protocol for specs */
+@protocol MFHSomeProtocol1 <NSObject>
+@end
+/** dummy protocol for specs */
+@protocol MFHSomeProtocol2 <NSObject>
+@end
+
+/** dummy subclass for specs */
+@interface MFHWireframeSubclass1 : MFHWireframe <MFHSomeProtocol1>
+@end
+@implementation MFHWireframeSubclass1
+@end
+
+/** dummy subclass for specs */
+@interface MFHWireframeSubclass2 : MFHWireframe <MFHSomeProtocol2>
+@end
+@implementation MFHWireframeSubclass2
+@end
+
 
 SPEC_BEGIN(MFHWireframeSpec)
 
@@ -70,6 +89,54 @@ describe(@"MFHWireframe", ^{
 
         it(@"should be attached to the second ViewController", ^{
             [[branchedWireframe should] equal:vc2.wireframe];
+        });
+
+        it(@"should have a reference to the parent wireframe", ^{
+            [[[branchedWireframe parentWireframe] should] equal:wf];
+        });
+
+        context(@"when looking for parent wireframes: %@", ^{
+            __block MFHWireframe          *rootWireframe;
+            __block MFHWireframeSubclass1 *subclass1Wireframe;
+            __block MFHWireframeSubclass2 *subclass2Wireframe;
+            __block UIViewController     *someVC;
+            beforeEach(^{
+                rootWireframe = [MFHWireframe new];
+                subclass1Wireframe = [[MFHWireframeSubclass1 alloc] initWireframeBranchedFromWireframe:rootWireframe];
+                subclass2Wireframe = [[MFHWireframeSubclass2 alloc] initWireframeBranchedFromWireframe:subclass1Wireframe];
+
+                someVC = [UIViewController new];
+                [subclass2Wireframe attachToViewController:someVC];
+            });
+            it(@"should provide access to itself or a parent wireframes matching a class in the WF hierarchy", ^{
+                // Should look all the way to the top, since we use 'memberOfClass'
+                [[[someVC wireframeInHierarchyOfClass:[MFHWireframe class] includeSelf:YES] should] equal:rootWireframe];
+
+                // Should only have to look up one level
+                [[[someVC wireframeInHierarchyOfClass:[MFHWireframeSubclass1 class] includeSelf:YES] should] equal:subclass1Wireframe];
+
+                // Should return its own wireframe
+                [[[someVC wireframeInHierarchyOfClass:[MFHWireframeSubclass2 class] includeSelf:YES] should] equal:subclass2Wireframe];
+
+                // Sanity check, this test should be equivalent to the one above it
+                [[[someVC wireframeInHierarchyOfClass:[MFHWireframeSubclass2 class] includeSelf:YES] should] equal:someVC.wireframe];
+            });
+
+            context(@"should provide access to itself or a parent wireframes matching a protocol in the WF hierarchy", ^{
+                // Should look all the way to the top, since we use 'memberOfClass'
+                it(@"should return nil if no match is found", ^{
+                    [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(UITableViewDelegate) includeSelf:YES] should] beNil];
+                });
+
+                it(@"should return the appropriate wireframe if a match is found", ^{
+                    //MFHWireframeSubclass1 conforms to MFHSomeProtocol1 (see top of spec file)
+                    [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(MFHSomeProtocol1) includeSelf:YES] should] equal:subclass1Wireframe];
+
+                    [[[someVC wireframeInHierarchyConformingToProtocol:@protocol(MFHSomeProtocol2) includeSelf:YES] should] equal:subclass2Wireframe];
+                });
+            });
+
+
         });
 
         context(@"when accessing properties", ^{
